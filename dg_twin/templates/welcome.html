@@ -1,3 +1,4 @@
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -153,7 +154,7 @@
       </p>
 
       <div class="button-container">
-        <a href="{% url 'dg_twin:google_login' %}" class="button google-btn">
+        <a href="{% provider_login_url 'google' %}" class="button google-btn">
           <svg width="20" height="20" viewBox="0 0 24 24">
             <path
               fill="currentColor"
@@ -164,7 +165,7 @@
         </a>
         <div class="auth-links">
           <span>Already have an account?</span>
-          <a href="{% url 'dg_twin:google_login' %}">Login here</a>
+          <a href="{% provider_login_url 'google' %}">Login here</a>
         </div>
 
         <div class="divider">
@@ -176,7 +177,7 @@
         </a>
         <div class="auth-links">
           <span>Want to create an account?</span>
-          <a href="{% url 'dg_twin:google_login' %}">Sign up here</a>
+          <a href="{% provider_login_url 'google' %}">Sign up here</a>
         </div>
       </div>
 

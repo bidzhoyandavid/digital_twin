@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 import uuid
 
 # Create your views here.
@@ -16,7 +18,7 @@ def welcome(request):
 def google_login(request):
     if request.user.is_authenticated:
         return redirect('dg_twin:avatar')
-    return redirect('social:begin', 'google-oauth2')
+    return redirect('account_google_login')
 
 def guest_login(request):
     if request.user.is_authenticated:
