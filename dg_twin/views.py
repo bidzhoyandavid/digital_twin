@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 import uuid
 
 # Create your views here.
@@ -36,7 +37,6 @@ def guest_login(request):
     
     return redirect('dg_twin:avatar')
 
+@login_required
 def avatar(request):
-    if not request.user.is_authenticated:
-        return redirect('dg_twin:welcome')
     return render(request, 'avatar.html')
