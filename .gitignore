@@ -1,3 +1,4 @@
- .env
+.env
 venv/ 
-dg_twin/__pycache__/
+__pycache__/
+.env
