@@ -4,8 +4,10 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from django.contrib import messages
+from .forms import AvatarForm
+from .models import Avatar
+from .services import generate_avatar
 import uuid
 
 # Create your views here.
@@ -41,4 +43,33 @@ def guest_login(request):
 
 @login_required
 def avatar(request):
-    return render(request, 'avatar.html')
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES)
+        if form.is_valid():
+            avatar = form.save(commit=False)
+            avatar.user = request.user
+            avatar.save()
+            
+            # Generate avatar using D-ID
+            avatar_url = generate_avatar(avatar.original_photo.path)
+            if avatar_url:
+                avatar.generated_avatar_url = avatar_url
+                avatar.save()
+                messages.success(request, 'Avatar generated successfully!')
+            else:
+                messages.error(request, 'Failed to generate avatar. Please try again.')
+            
+            return redirect('dg_twin:avatar')
+    else:
+        form = AvatarForm()
+    
+    # Get existing avatar if any
+    try:
+        existing_avatar = request.user.avatar
+    except Avatar.DoesNotExist:
+        existing_avatar = None
+    
+    return render(request, 'avatar.html', {
+        'form': form,
+        'avatar': existing_avatar
+    })

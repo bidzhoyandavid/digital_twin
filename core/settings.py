@@ -134,8 +134,14 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Media files
-MEDIA_URL = os.getenv('MEDIA_URL', '/media/')
-MEDIA_ROOT = os.path.join(BASE_DIR, os.getenv('MEDIA_ROOT', 'media'))
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# D-ID API Key
+DID_API_KEY = os.getenv('DID_API_KEY')
+
+# ImgBB API Key
+IMGBB_API_KEY = os.getenv('IMGBB_API_KEY')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

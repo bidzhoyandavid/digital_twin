@@ -3,3 +3,5 @@ psycopg2-binary==2.9.9
 python-dotenv==1.0.1
 social-auth-app-django==5.4.0 
 django-allauth==65.4.1
+pillow==11.1.0
+requests==2.32.3
